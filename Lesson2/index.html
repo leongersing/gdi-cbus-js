@@ -8,17 +8,13 @@
   <script>
     $(function(){
       var newToDoFieldEl = $("#newToDoField");
-      var notCompletedItemsEl = $("#allItems > #notCompletedItems");
-      var completedItemsEl = $("#allItems > #completedItems");
+
+      var notCompletedItemsEl = 
+      $("#allItems > #notCompletedItems");
+      var completedItemsEl = 
+      $("#allItems > #completedItems");
       var messageEl = $("#message");
-
-      var toggleCompletedItemHandler = function(eventObj){
-        var listItem = $(this).parent();
-        var movingToDone = (listItem.parent().prop("id") === "notCompletedItems");
-        listItem.remove().appendTo( (movingToDone) ? completedItemsEl : notCompletedItemsEl);
-        listItem.find("input[type='checkbox']").click(toggleCompletedItemHandler);
-      }
-
+      
       var addToDoHandler = function(eventObj){
         eventObj.preventDefault();
         var newElement = $("<li/>");
@@ -32,6 +28,15 @@
         newToDoFieldEl.val("");
       }
 
+      var toggleCompletedItemHandler = function(eventObj){
+        var listItem = $(this).parent();
+        var movingToDone = 
+        (listItem.parent().prop("id") === "notCompletedItems");
+        listItem.remove().appendTo( 
+          (movingToDone) ? completedItemsEl : notCompletedItemsEl);
+        listItem.find("input[type='checkbox']").click(toggleCompletedItemHandler);
+      }
+
       $("#createTodo").click(addToDoHandler);
       messageEl.text("Welcome, GDI. Now, get stuff done!");
     });
@@ -42,7 +47,8 @@
   <div id="message"></div>
   <fieldset>
     <legend>GDI todo list:</legend>
-    <input id="newToDoField" type="text"></input> <input id="createTodo" type="submit" value="add"></input>
+    <input id="newToDoField" type="text"></input>
+    <input id="createTodo" type="submit" value="add"></input>
   </fieldset>
   <div id="allItems">
     <h4> To do: </h4>
