@@ -23,10 +23,14 @@
       e.preventDefault();
       var user = commentUsernameEl.val();
       var body = commentBodyEl.val();
-      $.post("/", { username: user, body: body, id:currentBlogId }, function(response){
+      var data = { username: user, body: body, id:currentBlogId };
+      var url = "/";
+      var onCompleteHandler = function(response){
         if(response === "Created") createComment(user, body);
         else context.alert("Could not create Comment.");
-      });
+      };
+
+      $.post(url, data, onCompleteHandler);
     });
 
     $.getJSON("/?id=0", function(blog){
