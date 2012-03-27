@@ -1,0 +1,8 @@
+{ "name": "simpleParser",
+  "private": true,
+  "description": "Pulls the apple Movie Trailers RSS feed and converts it to JSON.",
+  "version" : "0.0.1",
+  "dependencies": {
+    "feedparser": "> 0.1"
+  }
+}
