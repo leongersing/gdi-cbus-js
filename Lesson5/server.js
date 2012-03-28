@@ -10,31 +10,25 @@ parser.parseUrl(feedURL, function(error, meta, articles){
   rssData = { "meta": meta, "articles": articles };
 });
 
-fs.readFile('index.html', function (err, data) {
-  if (err) throw err;
-  indexFile = data;
-});
-
-fs.readFile('jquery.js', function (err, data) {
-  if (err) throw err;
-  jqueryFile = data;
-});
-
-fs.readFile('trailers.js', function (err, data) {
-  if (err) throw err;
-  trailersFile = data;
-});
+// we'll load each file again on each request 
+// this way we don't have to restart node each time. 
+function loadLocal(file, callback){
+  fs.readFile(file, function (err, data) {
+    if (err) throw err;
+    callback(data);
+  });
+}
 
 // handle requests.
 var server = http.createServer(function(req, res){
   if(req.url === "/feed"){
     res.end(JSON.stringify(rssData));
   } else if(req.url === "/jquery.js"){
-    res.end(jqueryFile);
+    loadLocal("jquery.js", function(data){ res.end(data); });
   } else if(req.url === "/trailers.js"){ 
-    res.end(trailersFile);
+    loadLocal("trailers.js", function(data){ res.end(data); });
   } else if(req.url === "/") {
-    res.end(indexFile);
+    loadLocal("index.html", function(data){ res.end(data); });
   } else {
     res.statusCode = 404;
     res.end();
